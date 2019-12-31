@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey"
+    android:id="@+id/addcandidateview"
+    android:layout_height="match_parent"
+    tools:context=".AddCandidate">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:titleTextColor="@android:color/black"
+        android:background="@android:color/transparent">
+
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="100dp"
+        android:textSize="15dp"
+        android:layout_height="wrap_content"
+        android:text="Add Candidate"
+        />
+
+    <TextView
+        android:id="@+id/descriptionlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Enter Bio"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/candidatestatement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:cursorVisible="false"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:minLines="6"
+        android:padding="5dp"
+        android:scrollbars="vertical" />
+
+
+    <Button
+        android:id="@+id/submitcandidate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/green_button"
+
+        android:text="ADD"
+        android:textColor="@color/white" />
+
+
+
+
+
+</LinearLayout>
+
+

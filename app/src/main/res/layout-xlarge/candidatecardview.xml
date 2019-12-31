@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:elevation="3dp"
+    android:layout_margin="10dp"
+    android:padding="1dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:background="@color/grey">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:id="@+id/candidateName"
+            android:textSize="30dp"
+            android:text="Student leader Name"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:layout_marginTop="2dp"
+            android:justificationMode="inter_word"
+            android:layout_marginStart="10dp"
+            android:id="@+id/candidateBio"
+            android:layout_below="@id/candidateName"
+            android:textSize="19dp"
+            android:text=" is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since"
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:id="@+id/votelayout"
+            android:layout_marginStart="10dp"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:layout_below="@id/candidateBio"
+            tools:ignore="NotSibling">
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/candidateBio"
+            android:weightSum="4"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:id="@+id/percentage"
+                android:gravity="end"
+                android:layout_weight="4"
+                android:layout_below="@id/candidateName"
+                android:textSize="20dp"
+                android:text="10 votes"
+                />
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/votelayout"
+            android:layout_marginTop="48dp"
+            android:layout_weight="1"
+            android:background="@drawable/green_button"
+            android:text="vote"
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
