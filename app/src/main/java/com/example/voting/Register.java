@@ -106,6 +106,22 @@ public class Register extends AppCompatActivity {
                     });
 
                 }
+                else if(TextUtils.isEmpty(REGSTUDENTID)){
+                    studentId.setError("Enter Student Id");
+                }
+                else if(TextUtils.isEmpty(REGEMAIL)){
+                    emailAddress.setError("Enter Email");
+                }
+                else if(TextUtils.isEmpty(NAME)){
+                    emailAddress.setError("Enter Name");
+                }
+                else if(TextUtils.isEmpty(REGPASSWORD)){
+                    emailAddress.setError("Enter Password");
+                }
+                else if(TextUtils.isEmpty(CONFIRMPASS)){
+                    emailAddress.setError("Enter Confirm Password");
+                }
+
                 else{
                     View view = findViewById(R.id.register);
                     snackbar=Snackbar.make(view,"Ensure password and confirm password are equal",Snackbar.LENGTH_LONG);

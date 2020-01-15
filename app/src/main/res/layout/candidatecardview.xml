@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:elevation="3dp"
-    android:layout_margin="10dp"
-    android:padding="1dp"
+    android:layout_margin="1dp"
+    android:padding="20dp"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,19 +17,20 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
             android:id="@+id/candidateName"
-            android:textSize="30dp"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="20dp"
             android:text="Student leader Name"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
             android:layout_marginTop="2dp"
             android:justificationMode="inter_word"
             android:layout_marginStart="10dp"
             android:id="@+id/candidateBio"
             android:layout_below="@id/candidateName"
-            android:textSize="19dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="15dp"
             android:text=" is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since"
             />
 
@@ -56,7 +57,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@id/candidateBio"
-            android:weightSum="4"
+
+
             >
 
             <TextView
@@ -66,6 +68,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:id="@+id/percentage"
+                android:fontFamily="casual"
                 android:gravity="end"
                 android:layout_weight="4"
                 android:layout_below="@id/candidateName"
@@ -84,6 +87,7 @@
             android:layout_below="@id/votelayout"
             android:layout_marginTop="48dp"
             android:layout_weight="1"
+
             android:background="@drawable/green_button"
             android:text="vote"
             android:textColor="@color/white" />

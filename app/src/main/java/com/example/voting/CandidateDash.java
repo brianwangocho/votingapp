@@ -19,6 +19,7 @@ import com.example.voting.models.Candidate;
 import com.example.voting.models.Position;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +36,7 @@ public class CandidateDash extends AppCompatActivity {
     FirebaseAuth mAuth;
     static FirebaseUser currentuser;
     public String positionId;
+    Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,24 +108,9 @@ public class CandidateDash extends AppCompatActivity {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        System.out.println("clicked");
-                     Boolean vote =voteCandidate(candidate_id,positionId);
-                     if(vote){
-                         final Dialog dialog = new Dialog(CandidateDash.this);
-                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                         dialog.setContentView(R.layout.success_dialog);
-                         Button confirm = dialog.findViewById(R.id.confirm);
-                         confirm.setOnClickListener(new View.OnClickListener() {
-                             @Override
-                             public void onClick(View v) {
-                                dialog.dismiss();
-                             }
-                         });
-                         dialog.show();
-                     }
-                     else{
-                         Toast.makeText(CandidateDash.this,"you have already voted",Toast.LENGTH_LONG);
-                     }
+
+                     voteCandidate(candidate_id,positionId);
+
                     }
                 });
 
@@ -133,11 +120,70 @@ public class CandidateDash extends AppCompatActivity {
         candidateList.setAdapter(Adapter);
     }
 
-    private Boolean voteCandidate(String candidateId,String PositionId) {
-        DatabaseReference votenode =FirebaseDatabase.getInstance().getReference().child("Voting").child(PositionId).child(candidateId);
-        final DatabaseReference voter = votenode.push();
-        voter.child("voterId").setValue(currentuser.getUid());
-        return true;
+    private void voteCandidate(String candidateId,String PositionId) {
+        ///todo:check if the current user id is present in this tree
+
+
+        DatabaseReference votenode =FirebaseDatabase.getInstance().getReference()
+                .child("Voting").child(PositionId).child(candidateId);
+
+        votenode.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    final String voterId = dataSnapshot.child("voterId")
+                            .getValue().toString();
+                    if(voterId == currentuser.getUid()){
+                        View view = findViewById(R.id.candidatepage);
+                        snackbar= Snackbar.make(view,"you have already voted",Snackbar.LENGTH_LONG);
+                        View snackbarview = snackbar.getView();
+                        snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                        snackbar.show();
+                    }
+                    else{
+                        View view = findViewById(R.id.candidatepage);
+                        snackbar= Snackbar.make(view,"thank you for placing your vote",Snackbar.LENGTH_LONG);
+                        View snackbarview = snackbar.getView();
+                        snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                        snackbar.show();
+
+                    }
+
+                }
+                else{
+
+                    View view = findViewById(R.id.candidatepage);
+                    snackbar= Snackbar.make(view,"something went wrong contact admin",Snackbar.LENGTH_LONG);
+                    View snackbarview = snackbar.getView();
+                    snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                    snackbar.show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        final DatabaseReference voter = votenode.push();
+//        voter.child("voterId").setValue(currentuser.getUid());
+//
+//        final Dialog dialog = new Dialog(CandidateDash.this);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.success_dialog);
+//        Button confirm = dialog.findViewById(R.id.confirm);
+//        confirm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
+
 
     }
 

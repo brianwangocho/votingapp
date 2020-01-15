@@ -93,6 +93,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
+                else if(TextUtils.isEmpty(Email)){
+                    emailAddress.setError("please enter email address");
+
+                }
+                else if(TextUtils.isEmpty(pass)){
+                    password.setError("please enter password");
+
+                }
+
                 else{
                     View view = findViewById(R.id.mainactivity);
                     snackbar=Snackbar.make(view,"Ensure all the fields are not empty",Snackbar.LENGTH_LONG);
@@ -100,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     snackbar.show();
                 }
-            }else{
+            }
+            else{
                 View view = findViewById(R.id.mainactivity);
                 snackbar=Snackbar.make(view,"please connect to the internet",Snackbar.LENGTH_LONG);
                 View snackbarview = snackbar.getView();

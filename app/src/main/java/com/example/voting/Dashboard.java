@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.voting.models.Position;
@@ -104,7 +105,7 @@ public class Dashboard extends AppCompatActivity {
                 final String post_id = getRef(i).getKey();
                 reportViewHolder.setName(position.getName());
                 reportViewHolder.setDescription(position.getDescription());
-                Button view = reportViewHolder.mView.findViewById(R.id.view);
+                ImageView view = reportViewHolder.mView.findViewById(R.id.view);
                 final TextView candidate = reportViewHolder.mView.findViewById(R.id.candidate);
 
                 candidateref.child(post_id).addValueEventListener(new ValueEventListener() {
