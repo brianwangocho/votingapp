@@ -35,6 +35,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/candidate"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
@@ -43,11 +44,13 @@
             android:text="2 Candidates"
             android:textSize="15dp" />
 
+
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_toRightOf="@id/candidate"
-            android:layout_below="@id/votingpositiondescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+
+            android:layout_below="@id/candidate"
             android:layout_alignParentRight="true"
             android:id="@+id/view"
             android:src="@drawable/ic_eye"

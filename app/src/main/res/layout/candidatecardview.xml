@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:elevation="3dp"
-    android:layout_margin="1dp"
-    android:padding="20dp"
+    android:layout_margin="8dp"
+    android:padding="10dp"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
+        android:padding="9dp"
         android:background="@color/grey">
         <TextView
             android:layout_width="match_parent"
@@ -27,39 +27,13 @@
             android:layout_marginTop="2dp"
             android:justificationMode="inter_word"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
             android:id="@+id/candidateBio"
             android:layout_below="@id/candidateName"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="15dp"
             android:text=" is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since"
             />
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:id="@+id/votelayout"
-            android:layout_marginStart="10dp"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            android:layout_below="@id/candidateBio"
-            tools:ignore="NotSibling">
-
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/candidateBio"
-
-
-            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,25 +43,18 @@
                 android:textStyle="bold"
                 android:id="@+id/percentage"
                 android:fontFamily="casual"
-                android:gravity="end"
-                android:layout_weight="4"
-                android:layout_below="@id/candidateName"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/candidateBio"
                 android:textSize="20dp"
                 android:text="10 votes"
                 />
-
-
-
-        </LinearLayout>
-
         <Button
             android:id="@+id/vote"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/votelayout"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/percentage"
             android:layout_weight="1"
-
             android:background="@drawable/green_button"
             android:text="vote"
             android:textColor="@color/white" />
