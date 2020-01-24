@@ -2,6 +2,7 @@
 
     <string name="app_name">Voting</string>
     <string name="register_button">Register</string>
+    <string name="login_button">Login</string>
     <string name="label_confirm_password">Confirm Password</string>
     <string name="label_enter_password">Enter Password</string>
     <string name="vote_button_text">vote</string>

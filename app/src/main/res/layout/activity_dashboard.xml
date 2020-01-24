@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:textStyle="bold"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:text="ongoing votes"
             android:textColor="@color/white"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
