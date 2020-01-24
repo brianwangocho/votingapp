@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:elevation="3dp"
     android:layout_margin="8dp"
     android:layout_height="wrap_content">
     <RelativeLayout
@@ -13,22 +12,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:fontFamily="sans-serif-thin"
             android:id="@+id/votingposition"
-            android:textSize="20dp"
-            android:text="Student leader"
+            android:textSize="20sp"
+            android:text="@string/dashboard_card_title"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:id="@+id/votingpositiondescription"
             android:layout_below="@id/votingposition"
-            android:textSize="19dp"
-            android:text=" is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since"
+            android:textSize="19sp"
+            android:text="@string/candidate_bio"
             />
 
 
@@ -41,17 +42,18 @@
                 android:fontFamily="casual"
                 android:textColor="@color/colorPrimary"
                 android:layout_below="@id/votingpositiondescription"
-                android:text="2 Candidates"
-                android:textSize="15dp" />
+                android:text="@string/number_of_candidates"
+                android:textSize="15sp" />
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-
+                android:contentDescription="@string/view_candidates"
                 android:layout_below="@id/candidate"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:id="@+id/view"
                 android:src="@drawable/ic_eye"
                 />

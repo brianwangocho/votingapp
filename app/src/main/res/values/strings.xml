@@ -1,3 +1,14 @@
 <resources>
+
     <string name="app_name">Voting</string>
+    <string name="register_button">Register</string>
+    <string name="label_confirm_password">Confirm Password</string>
+    <string name="label_enter_password">Enter Password</string>
+    <string name="vote_button_text">vote</string>
+    <string name="dashboard_card_title">Student Leader</string>
+    <string name="view_candidates">View Candidates</string>
+    <string name="number_of_candidates">2 Candidates</string>
+    <string name="candidate_bio">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the  standard dummy text ever since</string>
+
+
 </resources>

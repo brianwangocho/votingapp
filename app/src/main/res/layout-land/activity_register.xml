@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textFontWeight="700"
+        android:fontFamily="sans-serif-thin"
         android:textSize="20sp"
         android:layout_marginBottom="2dp"
         android:layout_marginStart="10dp"
@@ -22,7 +22,7 @@
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
@@ -75,7 +75,6 @@
                 android:layout_below="@+id/studentidlabel"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_edittext"
-                android:cursorVisible="false"
                 android:inputType="number"
                 android:padding="5dp" />
 
@@ -94,7 +93,6 @@
                 android:layout_below="@+id/emaillabel"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_edittext"
-                android:cursorVisible="false"
                 android:inputType="textEmailAddress"
                 android:padding="5dp" />
 
@@ -104,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/regemailedit"
                 android:layout_marginBottom="5dp"
-                android:text="enter password" />
+                android:text="@string/label_enter_password" />
 
             <EditText
                 android:id="@+id/regpasswordedit"
@@ -113,7 +111,7 @@
                 android:layout_below="@id/passwordlabel"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_edittext"
-                android:cursorVisible="false"
+                android:autofillHints="@string/label_confirm_password"
                 android:inputType="textPassword"
                 android:maxLength="10"
                 android:padding="5dp" />
@@ -124,16 +122,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/regpasswordedit"
                 android:layout_marginBottom="5dp"
-                android:text="confirm password" />
+                android:text="@string/label_confirm_password" />
 
             <EditText
                 android:id="@+id/confirmpasswordedit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/label_confirm_password"
                 android:layout_below="@id/confirmpasswordlabel"
                 android:layout_marginBottom="20dp"
+                android:autofillHints="@string/label_confirm_password"
                 android:background="@drawable/rounded_edittext"
-                android:cursorVisible="false"
                 android:inputType="textPassword"
                 android:maxLength="10"
                 android:padding="5dp" />
@@ -145,7 +144,7 @@
                 android:layout_below="@id/confirmpasswordedit"
                 android:layout_marginBottom="80dp"
                 android:background="@drawable/green_button"
-                android:text="Register"
+                android:text="@string/register_button"
                 android:textColor="@color/white" />
 
 
