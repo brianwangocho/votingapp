@@ -1,6 +1,7 @@
 package com.example.voting;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.voting.models.Position;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +31,8 @@ public class Dashboard extends AppCompatActivity {
     private FloatingActionButton fab;
     FirebaseAuth mAuth;
     static FirebaseUser currentuser;
-    FirebaseAuth.AuthStateListener mAuthlistener;
+    Snackbar snackbar;
+
 
 
     @Override
@@ -73,8 +76,6 @@ public class Dashboard extends AppCompatActivity {
                                 else{
                                     fab.setVisibility(View.GONE);
                                 }
-
-
                             }
 
                         }
@@ -112,7 +113,7 @@ public class Dashboard extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         System.out.println(dataSnapshot.getChildrenCount());
                         if(!dataSnapshot.hasChildren()){
-                            candidate.setText("No candidates");
+                            candidate.setText(getResources().getString(R.string.no_candidate));
                         }
                         candidate.setText(String.valueOf(dataSnapshot.getChildrenCount())+"Candidates");
 
@@ -121,6 +122,53 @@ public class Dashboard extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
+                reportViewHolder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        if(currentuser !=null){
+                            FirebaseDatabase.getInstance().getReference().child("users").child(currentuser.getUid())
+                                    .orderByChild("usertype")
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @SuppressLint("RestrictedApi")
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.exists()){
+                                                final String usertypvalue = dataSnapshot.child("usertype")
+                                                        .getValue().toString();
+                                                if(usertypvalue.equals("administrator")){
+                                                    mydatabase.child(post_id).removeValue();
+                                                    View view = findViewById(R.id.votesdash);
+                                                    snackbar= Snackbar.make(view,"Poll has been deleted",Snackbar.LENGTH_LONG);
+                                                    View snackbarview = snackbar.getView();
+                                                    snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                                    snackbar.show();
+
+                                                }
+                                                else{
+                                                    View view = findViewById(R.id.votesdash);
+                                                    snackbar= Snackbar.make(view,"you don't have the right to do this",Snackbar.LENGTH_LONG);
+                                                    View snackbarview = snackbar.getView();
+                                                    snackbarview.setBackgroundColor(getResources().getColor(R.color.red));
+                                                    snackbar.show();
+                                                }
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                        }
+
+
+
+
+                        return false;
                     }
                 });
 

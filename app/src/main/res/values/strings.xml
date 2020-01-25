@@ -10,6 +10,7 @@
     <string name="view_candidates">View Candidates</string>
     <string name="number_of_candidates">2 Candidates</string>
     <string name="candidate_bio">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the  standard dummy text ever since</string>
+    <string name="no_candidate">No candidates</string>
 
 
 </resources>
