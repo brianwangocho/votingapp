@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,8 +99,13 @@ public class AddCandidate extends AppCompatActivity {
 //                Candidate c = new Candidate();
 //                c.setCandidateBio(description.getText().toString().trim());
 //                c.setCandidateName(dataSnapshot.child("name").getValue().toString());
+                String bio = description.getText().toString();
+                if(TextUtils.isEmpty(bio)){
+                    description.setError("please add bio");
+                }
 
-                dref.setValue(new Candidate(dataSnapshot.child("name").getValue().toString(),description.getText().toString().trim()));
+                dref.setValue(new Candidate(dataSnapshot.child("name").getValue().toString(),
+                        description.getText().toString().trim()));
 //                newPost.child("candidateName").setValue(dataSnapshot.child("name").getValue());
 //                newPost.child("candidateBio").setValue(description.getText().toString().trim());
                 Intent intent = new Intent(AddCandidate.this,CandidateDash.class);

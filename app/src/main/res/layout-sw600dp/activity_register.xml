@@ -11,150 +11,145 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-thin"
-        android:textSize="60sp"
+        android:textSize="30sp"
+        android:layout_marginBottom="2dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/register_button"
+        android:text="Register"
         />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_above="@+id/name"
-        android:layout_gravity="center"
-        android:layout_marginBottom="0dp"
-        android:paddingTop="20dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/logo" />
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center"
-        android:padding="5dp">
-
-
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="enter Name"
-            android:textSize="30sp" />
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center">
 
-        <EditText
-            android:id="@+id/regstudentname"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/name"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_edittext"
-            android:cursorVisible="false"
-            android:inputType="text"
-            android:padding="5dp" />
-
-
-        <TextView
-            android:id="@+id/studentidlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/regstudentname"
-            android:layout_marginBottom="5dp"
-            android:textSize="30sp"
-            android:text="enter student id" />
-
-        <EditText
-            android:id="@+id/regstudentidedit"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/studentidlabel"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="number"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/emaillabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/regstudentidedit"
-            android:layout_marginBottom="5dp"
-            android:textSize="30sp"
-            android:text="enter email address" />
-
-        <EditText
-            android:id="@+id/regemailedit"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/emaillabel"
-            android:layout_marginBottom="20dp"
-
-            android:background="@drawable/rounded_edittext"
-            android:inputType="textEmailAddress"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/passwordlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/regemailedit"
-            android:layout_marginBottom="5dp"
-            android:textSize="30sp"
-            android:text="@string/label_enter_password" />
-
-        <EditText
-            android:id="@+id/regpasswordedit"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/passwordlabel"
-            android:layout_marginBottom="20dp"
-            android:autofillHints="@string/label_confirm_password"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="textPassword"
-            android:maxLength="10"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/confirmpasswordlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/regpasswordedit"
-            android:textSize="30sp"
-            android:layout_marginBottom="5dp"
-            android:text="@string/label_confirm_password" />
-
-        <EditText
-            android:id="@+id/confirmpasswordedit"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/confirmpasswordlabel"
-            android:layout_marginBottom="20dp"
-
-            android:autofillHints="@string/label_confirm_password"
-            android:background="@drawable/rounded_edittext"
-            android:hint="@string/label_confirm_password"
-            android:inputType="textPassword"
-            android:maxLength="10"
-            android:padding="5dp" />
-
-        <Button
-            android:id="@+id/btnregister"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/confirmpasswordedit"
-            android:layout_marginBottom="80dp"
-            android:background="@drawable/green_button"
-            android:text="@string/register_button"
-            android:textColor="@color/white" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_above="@+id/name"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:paddingTop="20dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo" />
 
 
-    </RelativeLayout>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="enter Name" />
+
+            <EditText
+                android:id="@+id/regstudentname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="text"
+                android:padding="5dp" />
 
 
+            <TextView
+                android:id="@+id/studentidlabel"
+                android:layout_below="@+id/regstudentname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="enter student id" />
+
+            <EditText
+                android:id="@+id/regstudentidedit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/studentidlabel"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="number"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/emaillabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/regstudentidedit"
+                android:layout_marginBottom="5dp"
+                android:text="enter email address" />
+
+            <EditText
+                android:id="@+id/regemailedit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emaillabel"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="textEmailAddress"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/passwordlabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/regemailedit"
+                android:layout_marginBottom="5dp"
+                android:text="@string/label_enter_password" />
+
+            <EditText
+                android:id="@+id/regpasswordedit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passwordlabel"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:autofillHints="@string/label_confirm_password"
+                android:inputType="textPassword"
+                android:maxLength="10"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/confirmpasswordlabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/regpasswordedit"
+                android:layout_marginBottom="5dp"
+                android:text="@string/label_confirm_password" />
+
+            <EditText
+                android:id="@+id/confirmpasswordedit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_confirm_password"
+                android:layout_below="@id/confirmpasswordlabel"
+                android:layout_marginBottom="20dp"
+                android:autofillHints="@string/label_confirm_password"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="textPassword"
+                android:maxLength="10"
+                android:padding="5dp" />
+
+            <Button
+                android:id="@+id/btnregister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/confirmpasswordedit"
+                android:layout_marginBottom="80dp"
+                android:background="@drawable/green_button"
+                android:text="@string/register_button"
+                android:textColor="@color/white" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 
 

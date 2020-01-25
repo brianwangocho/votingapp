@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.voting.models.Candidate;
 import com.example.voting.models.Position;
+import com.example.voting.models.VotingObject;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -27,6 +31,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CandidateDash extends AppCompatActivity {
 
@@ -123,44 +130,45 @@ public class CandidateDash extends AppCompatActivity {
     private void voteCandidate(String candidateId,String PositionId) {
         ///todo:check if the current user id is present in this tree
 
+        final DatabaseReference voterStatus = FirebaseDatabase.getInstance().getReference()
+                .child("Voting").child(PositionId).child(candidateId).child(currentuser.getUid()).child("id");
+        voterStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if (dataSnapshot.getValue().equals(currentuser.getUid())){
+                        showDialogue("you have already voted","Error");
+                    } else {
 
-        DatabaseReference votenode =FirebaseDatabase.getInstance().getReference()
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference newvote = FirebaseDatabase.getInstance().getReference()
                 .child("Voting").child(PositionId).child(candidateId);
+        DatabaseReference votenode =FirebaseDatabase.getInstance().getReference()
+                .child("Voting").child(PositionId).child(candidateId).child(currentuser.getUid());
 
         votenode.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    final String voterId = dataSnapshot.child("voterId")
-                            .getValue().toString();
-                    if(voterId == currentuser.getUid()){
-                        View view = findViewById(R.id.candidatepage);
-                        snackbar= Snackbar.make(view,"you have already voted",Snackbar.LENGTH_LONG);
-                        View snackbarview = snackbar.getView();
-                        snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-                        snackbar.show();
-                    }
-                    else{
-                        View view = findViewById(R.id.candidatepage);
-                        snackbar= Snackbar.make(view,"thank you for placing your vote",Snackbar.LENGTH_LONG);
-                        View snackbarview = snackbar.getView();
-                        snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
-                        snackbar.show();
-
-                    }
-
+                    Log.d("vote_status","It exists");
+                    showDialogue("you have already voted","Error");
                 }
                 else{
-
-                    View view = findViewById(R.id.candidatepage);
-                    snackbar= Snackbar.make(view,"something went wrong contact admin",Snackbar.LENGTH_LONG);
-                    View snackbarview = snackbar.getView();
-                    snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
-                    snackbar.show();
+                    Log.d("vote_status","Doesn't exist");
+                    newvote.child(currentuser.getUid()).child("id").setValue(currentuser.getUid());
+                    showDialogue("success","Success");
                 }
+
 
             }
 
@@ -169,12 +177,21 @@ public class CandidateDash extends AppCompatActivity {
 
             }
         });
-//        final DatabaseReference voter = votenode.push();
+        //final DatabaseReference voter = votenode.push();
+//        Map<String, VotingObject> voter = new HashMap<>();
+//        voter.put(currentuser.getUid(), new VotingObject(currentuser.getUid()));
+//        votenode.setValue(voter);
+
+//        votenode.child(currentuser.getUid()).child("id").setValue(currentuser.getUid());
+
 //        voter.child("voterId").setValue(currentuser.getUid());
+
+
 //
 //        final Dialog dialog = new Dialog(CandidateDash.this);
 //        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.success_dialog);
+//        R.layout.success_dialog
+//        dialog.setContentView(getResources().getString(R.string.thank_you));
 //        Button confirm = dialog.findViewById(R.id.confirm);
 //        confirm.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -203,5 +220,22 @@ public class CandidateDash extends AppCompatActivity {
             TextView candidateBio =(TextView)mView.findViewById(R.id.candidateBio);
             candidateBio.setText(bio);
         }
+    }
+
+    public void showDialogue(String message,String title){
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+//        alertDialog.setMessage(getResources().getString(R.string.thank_you));
+        alertDialog.setIcon(R.drawable.thumbs_up);
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+
     }
 }

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-thin"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:layout_marginBottom="2dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -55,7 +55,6 @@
                 android:layout_below="@+id/name"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_edittext"
-                android:cursorVisible="false"
                 android:inputType="text"
                 android:padding="5dp" />
 
