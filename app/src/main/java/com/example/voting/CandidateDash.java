@@ -49,20 +49,20 @@ public class CandidateDash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_candidate);
-        candidateList = (RecyclerView)findViewById(R.id.candidatelist);
-        fab =(FloatingActionButton)findViewById(R.id.addCandidate);
+        candidateList = (RecyclerView) findViewById(R.id.candidatelist);
+        fab = (FloatingActionButton) findViewById(R.id.addCandidate);
         candidateList.setLayoutManager(new LinearLayoutManager(this));
-        mAuth= FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         positionId = getIntent().getExtras().getString("positionId");
-        Toast.makeText(CandidateDash.this,positionId,Toast.LENGTH_SHORT).show();
-        mydatabase= FirebaseDatabase.getInstance().getReference().child("candidate").child(positionId);
+        Toast.makeText(CandidateDash.this, positionId, Toast.LENGTH_SHORT).show();
+        mydatabase = FirebaseDatabase.getInstance().getReference().child("candidate").child(positionId);
         currentuser = mAuth.getCurrentUser();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CandidateDash.this,AddCandidate.class);
-                intent.putExtra("positionId",positionId);
+                Intent intent = new Intent(CandidateDash.this, AddCandidate.class);
+                intent.putExtra("positionId", positionId);
                 startActivity(intent);
 
             }
@@ -73,14 +73,14 @@ public class CandidateDash extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        final FirebaseRecyclerAdapter<Candidate,CandidateDash.ReportViewHolder> Adapter = new FirebaseRecyclerAdapter<Candidate,CandidateDash.ReportViewHolder>(
+        final FirebaseRecyclerAdapter<Candidate, CandidateDash.ReportViewHolder> Adapter = new FirebaseRecyclerAdapter<Candidate, CandidateDash.ReportViewHolder>(
                 Candidate.class,
                 R.layout.candidatecardview,
                 CandidateDash.ReportViewHolder.class,
                 mydatabase
 
 
-        ){
+        ) {
             @Override
             protected void populateViewHolder(CandidateDash.ReportViewHolder reportViewHolder, Candidate candidate, int i) {
                 final String candidate_id = getRef(i).getKey();
@@ -89,7 +89,7 @@ public class CandidateDash extends AppCompatActivity {
                 Button view = reportViewHolder.mView.findViewById(R.id.vote);
                 final TextView textView = reportViewHolder.mView.findViewById(R.id.percentage);
 
-                DatabaseReference votenode =FirebaseDatabase.getInstance().
+                DatabaseReference votenode = FirebaseDatabase.getInstance().
                         getReference().child("Voting")
                         .child(positionId).child(candidate_id);
 
@@ -97,12 +97,12 @@ public class CandidateDash extends AppCompatActivity {
                     @SuppressLint("NewApi")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(!dataSnapshot.hasChildren()){
+                        if (!dataSnapshot.hasChildren()) {
 
                             textView.setText("No votes have been casted");
 
                         }
-                        textView.setText(String.valueOf(dataSnapshot.getChildrenCount())+" Votes");
+                        textView.setText(String.valueOf(dataSnapshot.getChildrenCount()) + " Votes");
 
                     }
 
@@ -111,12 +111,12 @@ public class CandidateDash extends AppCompatActivity {
 
                     }
                 });
-                    //todo:understand this usage
+                //todo:understand this usage
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                     voteCandidate(candidate_id,positionId);
+                        voteCandidate(candidate_id, positionId);
 
                     }
                 });
@@ -127,20 +127,69 @@ public class CandidateDash extends AppCompatActivity {
         candidateList.setAdapter(Adapter);
     }
 
-    private void voteCandidate(String candidateId,String PositionId) {
+    private void voteCandidate(final String candidateId, final String PositionId) {
         ///todo:check if the current user id is present in this tree
 
+
         final DatabaseReference voterStatus = FirebaseDatabase.getInstance().getReference()
-                .child("Voting").child(PositionId).child(candidateId).child(currentuser.getUid()).child("id");
+                .child("Voting").child(PositionId).child(candidateId).child(currentuser.getUid());
         voterStatus.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    if (dataSnapshot.getValue().equals(currentuser.getUid())){
-                        showDialogue("you have already voted","Error");
-                    } else {
+                if (dataSnapshot.exists()) {
+                    Log.d("voteCandidate:1", "Already voted");
+                    Log.d("voter:1", currentuser.getUid());
 
-                    }
+                } else {
+                    //2
+                    final DatabaseReference allVotes = FirebaseDatabase.getInstance().getReference()
+                            .child("Voting").child(PositionId);
+                    allVotes.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    final String candidateKey = dataSnapshot1.getKey();
+                                    Log.d("candidateKey", (String.valueOf(candidateKey)));
+
+                                    final DatabaseReference candidateVotes = FirebaseDatabase.getInstance().getReference()
+                                            .child("Voting").child(PositionId).child(candidateKey).child(currentuser.getUid());
+                                    candidateVotes.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+                                                Log.d("voteCandidate:3", "Already voted");
+                                                Log.d("voter:3", currentuser.getUid());
+                                                showDialogue("you have already voted","Error");
+                                            } else {
+                                                Log.d("voteCandidate:2", "Not voted");
+                                                Log.d("voter:2", currentuser.getUid());
+                                                voterStatus.child("id").setValue(currentuser.getUid());
+                                                showDialogue("success", "Success");
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        }
+                                    });
+                                }
+                            } else {
+                                Log.d("voteCandidate:4", "Position not available");
+                                Log.d("voter:4", currentuser.getUid());
+                                voterStatus.child("id").setValue(currentuser.getUid());
+                                showDialogue("success", "Success");
+                                //todo;prompt alert position is not available
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+//                    voterStatus.child("id").setValue(currentuser.getUid());
+//                    showDialogue("success","Success");
                 }
             }
 
@@ -150,33 +199,33 @@ public class CandidateDash extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference newvote = FirebaseDatabase.getInstance().getReference()
-                .child("Voting").child(PositionId).child(candidateId);
-        DatabaseReference votenode =FirebaseDatabase.getInstance().getReference()
-                .child("Voting").child(PositionId).child(candidateId).child(currentuser.getUid());
-
-        votenode.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-
-                    Log.d("vote_status","It exists");
-                    showDialogue("you have already voted","Error");
-                }
-                else{
-                    Log.d("vote_status","Doesn't exist");
-                    newvote.child(currentuser.getUid()).child("id").setValue(currentuser.getUid());
-                    showDialogue("success","Success");
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        final DatabaseReference newvote = FirebaseDatabase.getInstance().getReference()
+//                .child("Voting").child(PositionId).child(candidateId);
+//        DatabaseReference votenode =FirebaseDatabase.getInstance().getReference()
+//                .child("Voting").child(PositionId).child(candidateId).child(currentuser.getUid());
+//
+//        votenode.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+//
+//                    Log.d("vote_status","It exists");
+//                    showDialogue("you have already voted","Error");
+//                }
+//                else{
+//                    Log.d("vote_status","Doesn't exist");
+//                    newvote.child(currentuser.getUid()).child("id").setValue(currentuser.getUid());
+//                    showDialogue("success","Success");
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
         //final DatabaseReference voter = votenode.push();
 //        Map<String, VotingObject> voter = new HashMap<>();
 //        voter.put(currentuser.getUid(), new VotingObject(currentuser.getUid()));
@@ -205,24 +254,26 @@ public class CandidateDash extends AppCompatActivity {
     }
 
 
-    public static class ReportViewHolder extends RecyclerView.ViewHolder{
+    public static class ReportViewHolder extends RecyclerView.ViewHolder {
         View mView;
+
         public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
-            mView=  itemView;
+            mView = itemView;
         }
-        public void setCandidateName(String candidateName){
-            TextView candidateName1 =(TextView)mView.findViewById(R.id.candidateName);
+
+        public void setCandidateName(String candidateName) {
+            TextView candidateName1 = (TextView) mView.findViewById(R.id.candidateName);
             candidateName1.setText(candidateName);
         }
 
-        public void setCandidateBio(String bio){
-            TextView candidateBio =(TextView)mView.findViewById(R.id.candidateBio);
+        public void setCandidateBio(String bio) {
+            TextView candidateBio = (TextView) mView.findViewById(R.id.candidateBio);
             candidateBio.setText(bio);
         }
     }
 
-    public void showDialogue(String message,String title){
+    public void showDialogue(String message, String title) {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 
         alertDialog.setTitle(title);
