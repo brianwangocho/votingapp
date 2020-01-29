@@ -54,7 +54,6 @@ public class CandidateDash extends AppCompatActivity {
         candidateList.setLayoutManager(new LinearLayoutManager(this));
         mAuth = FirebaseAuth.getInstance();
         positionId = getIntent().getExtras().getString("positionId");
-        Toast.makeText(CandidateDash.this, positionId, Toast.LENGTH_SHORT).show();
         mydatabase = FirebaseDatabase.getInstance().getReference().child("candidate").child(positionId);
         currentuser = mAuth.getCurrentUser();
 
@@ -139,6 +138,7 @@ public class CandidateDash extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     Log.d("voteCandidate:1", "Already voted");
                     Log.d("voter:1", currentuser.getUid());
+                    showDialogue("you have already voted","Error",R.mipmap.stop);
 
                 } else {
                     //2
@@ -160,12 +160,12 @@ public class CandidateDash extends AppCompatActivity {
                                             if (dataSnapshot.exists()) {
                                                 Log.d("voteCandidate:3", "Already voted");
                                                 Log.d("voter:3", currentuser.getUid());
-                                                showDialogue("you have already voted","Error");
+                                                showDialogue("you can only vote once","Stop",R.mipmap.stop);
                                             } else {
                                                 Log.d("voteCandidate:2", "Not voted");
                                                 Log.d("voter:2", currentuser.getUid());
                                                 voterStatus.child("id").setValue(currentuser.getUid());
-                                                showDialogue("success", "Success");
+                                                showDialogue("success", "Success",R.mipmap.thumbs_up_2);
                                             }
                                         }
                                         @Override
@@ -177,7 +177,7 @@ public class CandidateDash extends AppCompatActivity {
                                 Log.d("voteCandidate:4", "Position not available");
                                 Log.d("voter:4", currentuser.getUid());
                                 voterStatus.child("id").setValue(currentuser.getUid());
-                                showDialogue("success", "Success");
+                                showDialogue("success", "Success",R.mipmap.thumbs_up_2);
                                 //todo;prompt alert position is not available
                             }
                         }
@@ -273,13 +273,13 @@ public class CandidateDash extends AppCompatActivity {
         }
     }
 
-    public void showDialogue(String message, String title) {
+    public void showDialogue(String message, String title,int id) {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
 //        alertDialog.setMessage(getResources().getString(R.string.thank_you));
-        alertDialog.setIcon(R.drawable.thumbs_up);
+        alertDialog.setIcon(id);
         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
