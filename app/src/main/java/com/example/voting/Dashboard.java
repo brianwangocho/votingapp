@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Dashboard extends AppCompatActivity {
     private RecyclerView reportlist;
+    private ImageView logOut;
     private DatabaseReference mydatabase,candidateref;
     private FloatingActionButton fab;
     FirebaseAuth mAuth;
@@ -41,6 +42,7 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         reportlist = (RecyclerView) findViewById(R.id.ongoingvoteslist);
         fab = (FloatingActionButton)findViewById(R.id.floating_action_button);
+        logOut = (ImageView)findViewById(R.id.logout);
         reportlist.setLayoutManager(new LinearLayoutManager(this));
         mAuth= FirebaseAuth.getInstance();
 
@@ -54,6 +56,14 @@ public class Dashboard extends AppCompatActivity {
                 Intent intent = new Intent(Dashboard.this,AddPosition.class);
                 startActivity(intent);
 
+            }
+        });
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(Dashboard.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 
