@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:textStyle="bold"
+            android:fontFamily="sans-serif-thin"
             android:textSize="24dp"
             android:text="Candidates"
             android:textColor="@color/white"/>
@@ -46,8 +47,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         />
-
-
 
 
 </LinearLayout>
