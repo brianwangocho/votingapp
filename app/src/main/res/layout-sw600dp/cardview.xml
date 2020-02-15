@@ -48,14 +48,27 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="120dp"
             android:contentDescription="@string/view_candidates"
             android:layout_below="@id/candidate"
-            android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
             android:id="@+id/view"
             android:src="@drawable/ic_eye"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toLeftOf="@id/view"
+            android:layout_marginRight="30dp"
+            android:contentDescription="@string/view_chart"
+            android:layout_below="@id/candidate"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/chart"
+            android:src="@mipmap/chart"
             />
 
 

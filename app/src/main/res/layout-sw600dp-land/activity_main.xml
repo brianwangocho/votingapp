@@ -50,6 +50,8 @@
                 android:hint="Enter email address"
                 android:layout_margin="16dp"
                 android:textColorHint="@color/black"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawablePadding="5dp"
                 android:background="@drawable/rounded_edittext"
                 android:inputType="textEmailAddress"
                 android:padding="5dp" />
@@ -63,8 +65,9 @@
                 android:layout_below="@id/emailedit"
                 android:layout_marginBottom="20dp"
                 android:hint="Enter Password"
-                android:paddingVertical="20dp"
+
                 android:textColorHint="@color/black"
+                android:drawablePadding="5dp"
                 android:layout_margin="16dp"
                 android:background="@drawable/rounded_edittext"
                 android:inputType="textPassword"

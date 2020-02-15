@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,8 +56,7 @@ public class CandidateDash extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.addCandidate);
         candidateList.setLayoutManager(new LinearLayoutManager(this));
         mAuth = FirebaseAuth.getInstance();
-        positionId = getIntent().getExtras().getString("positionId");
-        mydatabase = FirebaseDatabase.getInstance().getReference().child("candidate").child(positionId);
+
         currentuser = mAuth.getCurrentUser();
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +74,8 @@ public class CandidateDash extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        positionId = getIntent().getExtras().getString("positionId");
+        mydatabase = FirebaseDatabase.getInstance().getReference().child("candidate").child(positionId);
         final FirebaseRecyclerAdapter<Candidate, CandidateDash.ReportViewHolder> Adapter = new FirebaseRecyclerAdapter<Candidate, CandidateDash.ReportViewHolder>(
                 Candidate.class,
                 R.layout.candidatecardview,
@@ -85,6 +89,7 @@ public class CandidateDash extends AppCompatActivity {
                 final String candidate_id = getRef(i).getKey();
                 reportViewHolder.setCandidateName(candidate.getCandidateName());
                 reportViewHolder.setCandidateBio(candidate.getCandidateBio());
+                reportViewHolder.setImageURL(candidate.getImageURL());
                 Button view = reportViewHolder.mView.findViewById(R.id.vote);
                 final TextView textView = reportViewHolder.mView.findViewById(R.id.percentage);
 
@@ -270,6 +275,15 @@ public class CandidateDash extends AppCompatActivity {
         public void setCandidateBio(String bio) {
             TextView candidateBio = (TextView) mView.findViewById(R.id.candidateBio);
             candidateBio.setText(bio);
+        }
+        public void setImageURL( String imageURL) {
+            Log.d("imageuUrl",imageURL);
+            ImageView postImage = (ImageView)mView.findViewById(R.id.candidate_image);
+            Picasso.get().load(imageURL).into(postImage);
+
+
+
+
         }
     }
 

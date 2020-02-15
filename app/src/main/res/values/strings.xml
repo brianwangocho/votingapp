@@ -14,6 +14,8 @@
     <string name="no_candidate">No candidates</string>
     <string name="ongoing_votes">ongoing votes</string>
     <string name="log_out">logout</string>
+    <string name="view_chart">view charts</string>
+    <string name="upload_image">upload image</string>
 
 
 </resources>

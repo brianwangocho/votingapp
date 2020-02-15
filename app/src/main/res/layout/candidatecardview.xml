@@ -10,11 +10,21 @@
         android:layout_height="match_parent"
         android:padding="9dp"
         android:background="@color/grey">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="140dp"
+            android:id="@+id/candidate_image"
+            android:contentDescription="candidate image"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon"
+            />
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_below="@id/candidate_image"
+            android:layout_alignParentRight="true"
             android:id="@+id/candidateName"
             android:fontFamily="sans-serif-thin"
             android:textSize="20sp"

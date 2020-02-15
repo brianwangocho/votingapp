@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:elevation="3dp"
     android:layout_margin="8dp"
+    android:layout_marginEnd="8dp"
     android:padding="10dp"
     android:layout_height="wrap_content">
     <RelativeLayout
@@ -11,28 +10,35 @@
         android:layout_height="match_parent"
         android:padding="9dp"
         android:background="@color/grey">
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:id="@+id/candidate_image"
+            android:src="@drawable/icon"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_below="@id/candidate_image"
+            android:layout_alignParentRight="true"
             android:id="@+id/candidateName"
             android:fontFamily="sans-serif-thin"
-            android:textSize="20dp"
-            android:text="Student leader Name"
+            android:textSize="20sp"
+            android:text="@string/dashboard_card_title"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:justificationMode="inter_word"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:id="@+id/candidateBio"
             android:layout_below="@id/candidateName"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="15dp"
-            android:text=" is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since"
+            android:textSize="15sp"
+            android:text="@string/candidate_bio"
             />
 
         <TextView
@@ -43,10 +49,10 @@
             android:textStyle="bold"
             android:id="@+id/percentage"
             android:fontFamily="casual"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/candidateBio"
-            android:textSize="20dp"
-            android:text="10 votes"
+            android:textSize="20sp"
+            android:text="@string/number_of_candidates"
             />
         <Button
             android:id="@+id/vote"
@@ -54,9 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_below="@id/percentage"
-            android:layout_weight="1"
             android:background="@drawable/green_button"
-            android:text="vote"
+            android:text="@string/vote_button_text"
             android:textColor="@color/white" />
 
 
