@@ -89,7 +89,7 @@ public class CandidateDash extends AppCompatActivity {
                 final String candidate_id = getRef(i).getKey();
                 reportViewHolder.setCandidateName(candidate.getCandidateName());
                 reportViewHolder.setCandidateBio(candidate.getCandidateBio());
-                reportViewHolder.setImageURL(candidate.getImageURL());
+                reportViewHolder.setImageURL(getApplicationContext(),candidate.getImageURL());
                 Button view = reportViewHolder.mView.findViewById(R.id.vote);
                 final TextView textView = reportViewHolder.mView.findViewById(R.id.percentage);
 
@@ -204,58 +204,6 @@ public class CandidateDash extends AppCompatActivity {
             }
         });
 
-//        final DatabaseReference newvote = FirebaseDatabase.getInstance().getReference()
-//                .child("Voting").child(PositionId).child(candidateId);
-//        DatabaseReference votenode =FirebaseDatabase.getInstance().getReference()
-//                .child("Voting").child(PositionId).child(candidateId).child(currentuser.getUid());
-//
-//        votenode.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//
-//                    Log.d("vote_status","It exists");
-//                    showDialogue("you have already voted","Error");
-//                }
-//                else{
-//                    Log.d("vote_status","Doesn't exist");
-//                    newvote.child(currentuser.getUid()).child("id").setValue(currentuser.getUid());
-//                    showDialogue("success","Success");
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-        //final DatabaseReference voter = votenode.push();
-//        Map<String, VotingObject> voter = new HashMap<>();
-//        voter.put(currentuser.getUid(), new VotingObject(currentuser.getUid()));
-//        votenode.setValue(voter);
-
-//        votenode.child(currentuser.getUid()).child("id").setValue(currentuser.getUid());
-
-//        voter.child("voterId").setValue(currentuser.getUid());
-
-
-//
-//        final Dialog dialog = new Dialog(CandidateDash.this);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        R.layout.success_dialog
-//        dialog.setContentView(getResources().getString(R.string.thank_you));
-//        Button confirm = dialog.findViewById(R.id.confirm);
-//        confirm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-//        dialog.show();
-
-
     }
 
 
@@ -276,10 +224,10 @@ public class CandidateDash extends AppCompatActivity {
             TextView candidateBio = (TextView) mView.findViewById(R.id.candidateBio);
             candidateBio.setText(bio);
         }
-        public void setImageURL( String imageURL) {
-            Log.d("imageuUrl",imageURL);
+        public void setImageURL( Context ctx,String imageURL) {
+            Log.d("imageuUrl",imageURL+"image url");
             ImageView postImage = (ImageView)mView.findViewById(R.id.candidate_image);
-            Picasso.get().load(imageURL).into(postImage);
+            Picasso.with(ctx).load(imageURL).into(postImage);
 
 
 

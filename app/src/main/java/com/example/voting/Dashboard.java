@@ -2,11 +2,14 @@ package com.example.voting;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -61,9 +64,25 @@ public class Dashboard extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(Dashboard.this,MainActivity.class);
-                startActivity(intent);
+                final AlertDialog alertDialogLogout = new AlertDialog.Builder(Dashboard.this).create(); //Read Update
+                alertDialogLogout.setMessage("Are you sure you want to logout");
+                alertDialogLogout.setButton(Dialog.BUTTON_POSITIVE, "LOGOUT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(Dashboard.this,MainActivity.class);
+                        startActivity(intent);
+
+                    }
+                });
+                alertDialogLogout.setButton(Dialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialogLogout.dismiss();
+                    }
+                });
+                alertDialogLogout.show();
+
             }
         });
 
@@ -138,42 +157,61 @@ public class Dashboard extends AppCompatActivity {
                     @Override
                     public boolean onLongClick(View v) {
 
-                        if(currentuser !=null){
-                            FirebaseDatabase.getInstance().getReference().child("users").child(currentuser.getUid())
-                                    .orderByChild("usertype")
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @SuppressLint("RestrictedApi")
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            if(dataSnapshot.exists()){
-                                                final String usertypvalue = dataSnapshot.child("usertype")
-                                                        .getValue().toString();
-                                                if(usertypvalue.equals("administrator")){
-                                                    mydatabase.child(post_id).removeValue();
-                                                    View view = findViewById(R.id.votesdash);
-                                                    snackbar= Snackbar.make(view,"Poll has been deleted",Snackbar.LENGTH_LONG);
-                                                    View snackbarview = snackbar.getView();
-                                                    snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                                                    snackbar.show();
+
+                        final AlertDialog alertDialog = new AlertDialog.Builder(Dashboard.this).create(); //Read Update
+                        alertDialog.setMessage("Are you sure you want to delete this poll");
+                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "DELETE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if(currentuser !=null){
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(currentuser.getUid())
+                                            .orderByChild("usertype")
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @SuppressLint("RestrictedApi")
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    if(dataSnapshot.exists()){
+                                                        final String usertypvalue = dataSnapshot.child("usertype")
+                                                                .getValue().toString();
+                                                        if(usertypvalue.equals("administrator")){
+                                                            mydatabase.child(post_id).removeValue();
+                                                            View view = findViewById(R.id.votesdash);
+                                                            snackbar= Snackbar.make(view,"Poll has been deleted",Snackbar.LENGTH_LONG);
+                                                            View snackbarview = snackbar.getView();
+                                                            snackbarview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                                            snackbar.show();
+
+                                                        }
+                                                        else{
+                                                            View view = findViewById(R.id.votesdash);
+                                                            snackbar= Snackbar.make(view,"you don't have the right to do this",Snackbar.LENGTH_LONG);
+                                                            View snackbarview = snackbar.getView();
+                                                            snackbarview.setBackgroundColor(getResources().getColor(R.color.red));
+                                                            snackbar.show();
+                                                        }
+                                                    }
 
                                                 }
-                                                else{
-                                                    View view = findViewById(R.id.votesdash);
-                                                    snackbar= Snackbar.make(view,"you don't have the right to do this",Snackbar.LENGTH_LONG);
-                                                    View snackbarview = snackbar.getView();
-                                                    snackbarview.setBackgroundColor(getResources().getColor(R.color.red));
-                                                    snackbar.show();
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                                                 }
-                                            }
+                                            });
+                                }
 
-                                        }
+                            }
+                        });
+                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alertDialog.dismiss();
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
 
-                                        }
-                                    });
-                        }
+                        alertDialog.show();
 
 
 

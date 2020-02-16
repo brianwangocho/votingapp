@@ -136,45 +136,52 @@ public class AddCandidate extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    mDownloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+//                    mDownloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                    Task<Uri> result = taskSnapshot.getMetadata().getReference().getDownloadUrl();
 
-
-
-                    userDatabase.addValueEventListener(new ValueEventListener() {
+                    result.addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Map<Object,String> map = new HashMap<Object, String>();
-//                Candidate c = new Candidate();
-//                c.setCandidateBio(description.getText().toString().trim());
-//                c.setCandidateName(dataSnapshot.child("name").getValue().toString());
-                            String bio = description.getText().toString();
-                            if(TextUtils.isEmpty(bio)){
-                                description.setError("please add bio");
-                            }
+                        public void onSuccess(Uri uri) {
+                            final String photoStringLink = uri.toString();
 
-                            name = dataSnapshot.child("name").getValue().toString();
-                dref.setValue(new Candidate(name,
-                        description.getText().toString().trim(),mDownloadUrl));
-//                newPost.child("candidateName").setValue(dataSnapshot.child("name").getValue());
-//                newPost.child("candidateBio").setValue(description.getText().toString().trim());
-                Intent intent = new Intent(AddCandidate.this,CandidateDash.class);
-                startActivity(intent);
+                            userDatabase.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Map<Object,String> map = new HashMap<Object, String>();
+                                    String bio = description.getText().toString();
+                                    if(TextUtils.isEmpty(bio)){
+                                        description.setError("please add bio");
+                                    }
 
-                        }
+                                    name = dataSnapshot.child("name").getValue().toString();
+                                    dref.setValue(new Candidate(name,
+                                            description.getText().toString().trim(),photoStringLink));
+                                    Intent intent = new Intent(AddCandidate.this,
+                                            CandidateDash.class);
+                                    startActivity(intent);
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            System.out.println("databaseError = " + databaseError);
+                                }
 
-                        }
-                    });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    System.out.println("databaseError = " + databaseError);
+
+                                }
+                            });
 
 //                    dref.setValue(new Candidate(name,
 //                        description.getText().toString().trim(),
 //                            taskSnapshot.getMetadata().getReference().getDownloadUrl()
 //                            ));
-                    Intent intent = new Intent(AddCandidate.this,CandidateDash.class);
-                    startActivity(intent);
+                            Intent intent = new Intent(AddCandidate.this,CandidateDash.class);
+                            startActivity(intent);
+
+                        }
+                    });
+
+
+
+
 
                 }
             })

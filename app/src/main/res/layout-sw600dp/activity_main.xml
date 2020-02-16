@@ -65,7 +65,7 @@
                 android:layout_below="@id/emailedit"
                 android:layout_marginBottom="20dp"
                 android:hint="Enter Password"
-
+                android:drawableLeft="@drawable/ic_password"
                 android:textColorHint="@color/black"
                 android:drawablePadding="5dp"
                 android:layout_margin="16dp"
