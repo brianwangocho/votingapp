@@ -11,7 +11,7 @@
         android:padding="9dp"
         android:background="@color/grey">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="140dp"
             android:id="@+id/candidate_image"
             android:contentDescription="candidate image"

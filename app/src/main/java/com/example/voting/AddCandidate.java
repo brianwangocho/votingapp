@@ -122,6 +122,7 @@ public class AddCandidate extends AppCompatActivity {
             }
         });
     }
+    ////to add data for firebase cloud storage
 
     private void addCandidate() {
         userDatabase= FirebaseDatabase.getInstance().getReference().child("users").child(currentuser.getUid());
